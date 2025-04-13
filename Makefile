@@ -6,12 +6,13 @@
 #    By: cade-oli <cade-oli@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/12 15:32:36 by cade-oli          #+#    #+#              #
-#    Updated: 2025/04/12 17:13:30 by cade-oli         ###   ########.fr        #
+#    Updated: 2025/04/13 18:01:10 by cade-oli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 MAKE	= make
-NAME	= minitalk
+SERVER	= server
+CLIENT	= client
 
 #==============================================================================#
 #                                    PATHS                                     #
@@ -20,13 +21,16 @@ SRC_PATH	= src
 INC_PATH	= inc
 LIBS_PATH	= lib
 BUILD_PATH	= .build
-TEMP_PATH	= .temp
 
 LIBFT_PATH	= $(LIBS_PATH)/libft
 
-FILES	= main.c
-SRCS	= $(addprefix $(SRC_PATH)/, $(FILES))
-OBJS	= $(SRCS:$(SRC_PATH).c=$(BUILD_PATH).o)
+SRC_SERVER	= $(addprefix $(SRC_PATH)/, server.c server_utils.c)
+SRC_CLIENT	= $(addprefix $(SRC_PATH)/, client.c client_utils.c)
+
+OBJS_SERVER	= $(patsubst $(SRC_PATH)/%.c,$(BUILD_PATH)/%.o,$(SRC_SERVER))
+OBJS_CLIENT	= $(patsubst $(SRC_PATH)/%.c,$(BUILD_PATH)/%.o,$(SRC_CLIENT))
+
+# DEPS = $(OBJS:.o=.d)
 
 #==============================================================================#
 #                              COMPILER & FLAGS                                #
@@ -47,22 +51,21 @@ MKDIR_P		= mkdir -p
 
 ##@ minitalk Compilation Rules 🏗
 
-all: deps $(NAME) 		## Compile All
+all: deps $(SERVER) $(CLIENT)			## Compile All
 
-$(NAME): $(BUILD_PATH) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH)/libft.a -I$(LIBFT_PATH) -o $(NAME)
+$(SERVER): $(BUILD_PATH) $(OBJS_SERVER)
+	$(CC) $(CFLAGS) $(OBJS_SERVER) $(LIBFT_PATH)/libft.a -I$(LIBFT_PATH) -o $(SERVER)
+
+$(CLIENT): $(BUILD_PATH) $(OBJS_CLIENT)
+	$(CC) $(CFLAGS) $(OBJS_CLIENT) $(LIBFT_PATH)/libft.a -I$(LIBFT_PATH) -o $(CLIENT)
 
 $(BUILD_PATH)/%.o: $(SRC_PATH)/%.c
 	@echo -n "$(MAG)█$(D)"
-	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_PATH):
 	$(MKDIR_P) $(BUILD_PATH)
 	@echo "* $(YEL)Creating $(BUILD_PATH) folder:$(D) $(_SUCCESS)"
-
-$(TEMP_PATH):
-	$(MKDIR_P) $(TEMP_PATH)
-	@echo "* $(YEL)Creating $(TEMP_PATH) folder:$(D) $(_SUCCESS)"
 
 deps: 			## Download/Update libft
 	@if test ! -d "$(LIBFT_PATH)"; then make get_libft; \
@@ -70,17 +73,11 @@ deps: 			## Download/Update libft
 	fi
 	@echo " $(RED)$(D) [$(GRN)Nothing to be done!$(D)]"
 
--include $(DEPS)
-
 get_libft:		## Get Libft module
 	@echo "* [$(CYA)Getting Libft$(D)]"
 	git clone git@github.com:carolcortes/libft.git $(LIBFT_PATH)
 	$(MAKE) extra -C $(LIBFT_PATH)
 	@echo "* $(GRN)Libft submodule download$(D): $(_SUCCESS)"
-
-##@ Test
-# valgrind:
-# test:
 
 ##@ Clean-up Rules 󰃢
 
@@ -88,8 +85,7 @@ clean:
 	$(RM) $(BUILD_PATH)
 
 fclean: clean
-# $(RM) $(NAME) $(LIBS_PATH) $(TEMP_PATH)
-	$(RM) $(NAME) $(TEMP_PATH)
+	$(RM) $(NAME) $(LIBS_PATH) $(TEMP_PATH)
 
 re: fclean all
 

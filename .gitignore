@@ -2,3 +2,5 @@ minitalk
 .build
 .temp
 lib
+client
+server
