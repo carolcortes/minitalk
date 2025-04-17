@@ -6,7 +6,7 @@
 /*   By: cade-oli <cade-oli@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:15:10 by cade-oli          #+#    #+#             */
-/*   Updated: 2025/04/13 17:57:58 by cade-oli         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:57:37 by cade-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	send_char(pid_t pid, unsigned char c)
 		else
 			kill(pid, SIGUSR1);
 		pause();
+		usleep(100);
 	}
 }
 
@@ -42,7 +43,7 @@ void	ack_handler(int signum)
 
 void	print_usage(void)
 {
-	ft_printf("Usage: ./client <server_pid> <message>\n");
+	ft_printf(CYAN "Usage: ./client <server_pid> <message>\n" RESET);
 }
 
 void	handle_error_args(int ac)
@@ -50,8 +51,8 @@ void	handle_error_args(int ac)
 	if (ac == 3)
 		return ;
 	if (ac == 2)
-		ft_printf("Missing message to send.\n");
+		ft_printf(RED "Missing message to send.\n" RESET);
 	else if (ac > 3)
-		ft_printf("Only one message can be sent at a time.\n");
+		ft_printf(RED "Only one message can be sent at a time.\n" RESET);
 	print_usage();
 }

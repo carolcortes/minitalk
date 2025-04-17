@@ -6,10 +6,11 @@
 /*   By: cade-oli <cade-oli@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:55:06 by cade-oli          #+#    #+#             */
-/*   Updated: 2025/04/13 17:49:23 by cade-oli         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:02:18 by cade-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// #define _POSIX_C_SOURCE 200809L
 #include "../inc/minitalk.h"
 
 void	print_banner(void)

@@ -6,15 +6,15 @@
 /*   By: cade-oli <cade-oli@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:18 by cade-oli          #+#    #+#             */
-/*   Updated: 2025/04/13 17:45:50 by cade-oli         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:58:05 by cade-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_H
 # define MINITALK_H
 
-# include <unistd.h>
 # include <signal.h>
+# include <unistd.h>
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
 # include "ansii_colors.h"

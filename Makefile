@@ -6,7 +6,7 @@
 #    By: cade-oli <cade-oli@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/12 15:32:36 by cade-oli          #+#    #+#              #
-#    Updated: 2025/04/13 18:01:10 by cade-oli         ###   ########.fr        #
+#    Updated: 2025/04/17 15:24:40 by cade-oli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,12 +51,12 @@ MKDIR_P		= mkdir -p
 
 ##@ minitalk Compilation Rules 🏗
 
-all: deps $(SERVER) $(CLIENT)			## Compile All
+all: deps $(BUILD_PATH) $(CLIENT) $(SERVER)			## Compile All
 
-$(SERVER): $(BUILD_PATH) $(OBJS_SERVER)
+$(SERVER): $(OBJS_SERVER)
 	$(CC) $(CFLAGS) $(OBJS_SERVER) $(LIBFT_PATH)/libft.a -I$(LIBFT_PATH) -o $(SERVER)
 
-$(CLIENT): $(BUILD_PATH) $(OBJS_CLIENT)
+$(CLIENT): $(OBJS_CLIENT)
 	$(CC) $(CFLAGS) $(OBJS_CLIENT) $(LIBFT_PATH)/libft.a -I$(LIBFT_PATH) -o $(CLIENT)
 
 $(BUILD_PATH)/%.o: $(SRC_PATH)/%.c
@@ -85,7 +85,7 @@ clean:
 	$(RM) $(BUILD_PATH)
 
 fclean: clean
-	$(RM) $(NAME) $(LIBS_PATH) $(TEMP_PATH)
+	$(RM) $(SERVER) $(CLIENT) $(LIBS_PATH)
 
 re: fclean all
 
