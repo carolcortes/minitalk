@@ -6,7 +6,7 @@
 /*   By: cade-oli <cade-oli@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:15:10 by cade-oli          #+#    #+#             */
-/*   Updated: 2025/04/17 14:57:37 by cade-oli         ###   ########.fr       */
+/*   Updated: 2025/06/01 11:39:30 by cade-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	send_message(pid_t pid, char *msg)
 	while (*msg)
 		send_char(pid, *msg++);
 	send_char(pid, '\0');
-	ft_printf(GREEN "Message received by the Server %d.\n" RESET, pid);
+	ft_printf(GREEN "Message fully sent to the Server [PID %d].\n" RESET, pid);
 }
 
 void	send_char(pid_t pid, unsigned char c)
@@ -31,14 +31,8 @@ void	send_char(pid_t pid, unsigned char c)
 			kill(pid, SIGUSR2);
 		else
 			kill(pid, SIGUSR1);
-		pause();
 		usleep(100);
 	}
-}
-
-void	ack_handler(int signum)
-{
-	(void)signum;
 }
 
 void	print_usage(void)
